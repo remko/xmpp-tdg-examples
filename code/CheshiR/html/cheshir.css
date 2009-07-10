@@ -1,0 +1,14 @@
+p {
+	padding: 0 0 0 0;
+	margin: 0 0 10 0;
+}
+
+p.home-message {
+	padding: 0;
+	margin: 0;
+}
+
+p.home-date {
+	font-size: .7em;
+	font-color: grey;
+}

@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>Home for %(user)s</title>
+    <link rel="stylesheet" type="text/css" href="cheshir.css" />
+	</head>
+	<body>
+		<div id="contacts">
+			Contacts:
+			%(contacts)s
+			<form action="%(uri)s" method="POST">
+				<input type="text" name="contact"/>
+				<input type="submit" name="add-contact" value="Add Contact"/>
+			</form>
+		</div>
+		<div id="post">
+			Post message:
+			<form action="%(uri)s" method="POST">
+				<input type="text" name="message"/>
+				<input type="submit" name="post-message" value="Post"/>
+			</form>
+		</div>
+		<div id="messages">
+			%(messages)s
+		</div>
+	</body>
+</html>
