@@ -19,9 +19,9 @@ class RegistrableComponent :
     self.xmpp.registerPlugin("xep_0030")
     self.xmpp.plugin["xep_0030"].add_feature("jabber:iq:register")
     self.xmpp.add_handler("<iq type='get' xmlns='jabber:client'>" + 
-			"<query xmlns='jabber:iq:register'/></iq>", self.handleRegistrationFormRequest)
+      "<query xmlns='jabber:iq:register'/></iq>", self.handleRegistrationFormRequest)
     self.xmpp.add_handler("<iq type='set' xmlns='jabber:client'>" +
-			"<query xmlns='jabber:iq:register'/></iq>", self.handleRegistrationRequest)
+      "<query xmlns='jabber:iq:register'/></iq>", self.handleRegistrationRequest)
     ## END NEW
 
   ## BEGIN NEW
@@ -54,7 +54,8 @@ class RegistrableComponent :
   ## ...
   def handleXMPPConnected(self, event) :
     for user in self.backend.getAllUsers() :
-      self.xmpp.sendPresence(pto = self.backend.getJIDForUser(user))
+      if self.backend.getUserHasJID(user) :
+        self.xmpp.sendPresence(pto = self.backend.getJIDForUser(user))
 
   def handleIncomingXMPPEvent(self, event) :
     message = event["message"]

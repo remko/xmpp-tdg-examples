@@ -10,6 +10,8 @@ from RegistrableComponent import RegistrableComponent
 
 def main() :
 	backend = SimpleBackend()
+	backend.jidToUser = {}
+	backend.userToJID = {}
 	component = RegistrableComponent(
 		jid = "posts.cheshir.lit", password = "mypass",
 		server = "cheshir.lit", port = 5347, backend = backend)

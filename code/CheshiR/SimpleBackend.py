@@ -72,6 +72,9 @@ class SimpleBackend (Backend) :
   def getJIDForUser(self, user) :
     return self.userToJID[user]
 
+  def getUserHasJID(self, user) :
+    return self.userToJID.has_key(user)
+
   def getShouldMonitorPresenceFromUser(self, user):
     return self.userPresenceMonitoring[user]
 
