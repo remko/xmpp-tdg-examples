@@ -5,6 +5,7 @@ sys.path.append("../3rdParty")
 import logging
 import sleekxmpp
 
+# Uncomment the following line to turn on debugging
 #logging.basicConfig(level=logging.DEBUG, format="%(levelname)-8s %(message)s")
 
 def main() : 
