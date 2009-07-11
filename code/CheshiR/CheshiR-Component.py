@@ -11,7 +11,7 @@ def main() :
 	backend = SimpleBackend()
 	component = Component(
 		jid = "posts.cheshir.lit", password = "mypass",
-		server = "cheshir.lit", port = 5060, backend = backend)
+		server = "cheshir.lit", port = 5347, backend = backend)
 	component.start()
 	httpFrontend = HTTPFrontend(8080, backend)
 	httpFrontend.start()
