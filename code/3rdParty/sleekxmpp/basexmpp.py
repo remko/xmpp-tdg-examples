@@ -92,8 +92,8 @@ class basexmpp(object):
 		self.auto_subscribe = True
 		self.event_handlers = {}
 		self.roster = {}
-		self.registerHandler(Callback('IM', MatchMany((MatchXMLMask("<message xmlns='%s' type='chat'><body /></message>" % self.default_ns),MatchXMLMask("<message xmlns='%s' type='normal'><body /></message>" % self.default_ns),MatchXMLMask("<message xmlns='%s' type='__None__'><body /></message>" % self.default_ns))), self._handleMessage))
-		self.registerHandler(Callback('Presence', MatchMany((MatchXMLMask("<presence xmlns='%s' type='available'/>" % self.default_ns),MatchXMLMask("<presence xmlns='%s' type='__None__'/>" % self.default_ns),MatchXMLMask("<presence xmlns='%s' type='unavailable'/>" % self.default_ns))), self._handlePresence))
+		self.registerHandler(Callback('IM', MatchMany((MatchXMLMask("<message xmlns='%s' type='chat'><body /></message>" % self.default_ns),MatchXMLMask("<message xmlns='%s' type='normal'><body /></message>" % self.default_ns),MatchXMLMask("<message xmlns='%s' type='__None__'><body /></message>" % self.default_ns))), self._handleMessage, thread=False))
+		self.registerHandler(Callback('Presence', MatchMany((MatchXMLMask("<presence xmlns='%s' type='available'/>" % self.default_ns),MatchXMLMask("<presence xmlns='%s' type='__None__'/>" % self.default_ns),MatchXMLMask("<presence xmlns='%s' type='unavailable'/>" % self.default_ns))), self._handlePresence, thread=False))
 		self.registerHandler(Callback('PresenceSubscribe', MatchMany((MatchXMLMask("<presence xmlns='%s' type='subscribe'/>" % self.default_ns),MatchXMLMask("<presence xmlns='%s' type='unsubscribed'/>" % self.default_ns))), self._handlePresenceSubscribe))
 	
 	def set_jid(self, jid):
@@ -138,7 +138,7 @@ class basexmpp(object):
 			return self.getId()
 	
 	def add_handler(self, mask, pointer, disposable=False, threaded=False, filter=False):
-		logging.warning("Deprecated add_handler used for %s: %s." % (mask, pointer))
+		#logging.warning("Deprecated add_handler used for %s: %s." % (mask, pointer))
 		self.registerHandler(XMLCallback('add_handler_%s' % self.getNewId(), MatchXMLMask(mask), pointer, threaded, disposable))
 	
 	def getId(self):
@@ -343,9 +343,14 @@ class basexmpp(object):
 
 	def _handleMessage(self, msg):
 		xml = msg.xml
+		ns = xml.tag.split('}')[0]
+		if ns == 'message':
+			ns = ''
+		else:
+			ns = "%s}" % ns
 		mfrom = xml.attrib['from']
-		message = xml.find('{%s}body' % self.default_ns).text
-		subject = xml.find('{%s}subject' % self.default_ns)
+		message = xml.find('%sbody' % ns).text
+		subject = xml.find('%ssubject' % ns)
 		if subject is not None:
 			subject = subject.text
 		else:
@@ -358,10 +363,15 @@ class basexmpp(object):
 	
 	def _handlePresence(self, presence):
 		xml = presence.xml
+		ns = xml.tag.split('}')[0]
+		if ns == 'presence':
+			ns = ''
+		else:
+			ns = "%s}" % ns
 		"""Update roster items based on presence"""
-		show = xml.find('{%s}show' % self.default_ns)
-		status = xml.find('{%s}status' % self.default_ns)
-		priority = xml.find('{%s}priority' % self.default_ns)
+		show = xml.find('%sshow' % ns)
+		status = xml.find('%sstatus' % ns)
+		priority = xml.find('%spriority' % ns)
 		fulljid = xml.attrib['from']
 		to = xml.attrib['to']
 		resource = self.getjidresource(fulljid)

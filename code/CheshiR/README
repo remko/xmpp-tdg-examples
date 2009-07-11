@@ -19,6 +19,3 @@ Caveats
   mapping is currently hard-coded in the jidToUser and userToJID dictionaries
   in SimpleBackend.py. Normally, the service would keep track of this mapping
   through configuration via a web interface or such.
-* The component variants currently don't work with other servers than Tigase
-  due to bugs and shortcomings in SleekXMPP. We hope this will be resolved
-	soon.

@@ -194,12 +194,27 @@ class XMLStream(object):
 			except KeyboardInterrupt:
 				logging.debug("Keyboard Escape Detected")
 				self.state.set('processing', False)
+				self.state.set('reconnect', False)
 				self.disconnect()
-				raise
+				return
+			except CloseStream:
+				return
+			except SystemExit:
+				return
+			except socket.EBADF:
+				if not self.state.reconnect:
+					return
+				else:
+					self.state.set('processing', False)
+					traceback.print_exc()
+					self.disconnect(reconnect=True)
 			except:
-				self.state.set('processing', False)
-				traceback.print_exc()
-				self.disconnect(reconnect=True)
+				if not self.state.reconnect:
+					return
+				else:
+					self.state.set('processing', False)
+					traceback.print_exc()
+					self.disconnect(reconnect=True)
 			if self.state['reconnect']:
 				self.reconnect()
 			self.state.set('processing', False)
@@ -244,9 +259,10 @@ class XMLStream(object):
 		try:
 			self.socket.send(data)
 		except socket.error,(errno, strerror):
-			logging.error("Disconnected. Socket Error #%s: %s" % (errno,strerror))
 			self.state.set('connected', False)
-			self.disconnect(reconnect=True)
+			if self.state.reconnect:
+				logging.error("Disconnected. Socket Error #%s: %s" % (errno,strerror))
+				self.disconnect(reconnect=True)
 			return False
 		return True
 	
@@ -261,19 +277,26 @@ class XMLStream(object):
 			self.filesocket.close()
 			self.socket.shutdown(socket.SHUT_RDWR)
 		except socket.error,(errno,strerror):
-			logging.warning("Error while disconnecting. Socket Error #%s: %s" % (errno, strerror))
+			#logging.warning("Error while disconnecting. Socket Error #%s: %s" % (errno, strerror))
+			#thread.exit_thread()
+			pass
 		if self.state['processing']:
-			raise
+			#raise CloseStream
+			pass
 	
 	def reconnect(self):
 		self.state.set('tls',False)
 		self.state.set('ssl',False)
 		time.sleep(1)
 		self.connect()
+	
+	def incoming_filter(self, xmlobj):
+		return xmlobj
 		
 	def __spawnEvent(self, xmlobj):
 		"watching xmlOut and processes handlers"
 		#convert XML into Stanza
+		xmlobj = self.incoming_filter(xmlobj)
 		logging.debug("PROCESSING: %s" % xmlobj.tag)
 		stanza = None
 		for stanza_class in self.__root_stanza:
