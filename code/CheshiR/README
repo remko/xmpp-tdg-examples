@@ -1,0 +1,21 @@
+The CheshiR MicroBlogging Platform
+----------------------------------
+This code is described in Chapter 14 of the book.
+
+The chapter is divided into different sprints, and each of the sprints can
+be run as separate scripts:
+- CheshiR-Bot.py: The CheshiR XMPP IM Bot
+- CheshiR-ConfigurableBot.py: Configuring the CheshiR XMPP IM Bot
+- CheshiR-RegistrableComponent.py: Registering with the CheshiR Server 
+  Component.
+- CheshiR-SimpleComponent.py: Scaling the CheshiR XMPP Service Using a Server 
+  Component
+- CheshiR-Component.py: Extending the Server Component with Rosters
+
+Caveats
+-------
+* CheshiR-Bot.py and CheshiR-ConfigurableBot.py assume that the mapping from 
+	JID to User is known by the backend. This is currently added in an ad-hoc
+	way by having a mapping in jidToUser and userToJID in SimpleBackend.py.
+	Normally, the service would keep track of this mapping through configuration
+	via a web interface or such.

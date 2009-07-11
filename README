@@ -3,6 +3,15 @@ This package contains the sources of the code examples used in the book
 These examples can be used and modified at will, without requesting our
 permission. 
 
+These code samples serve illustrative purposes for the book only, so they
+cannot be considered stable or usable in production. Making this code
+robust is also not our primary goal, since that would require a lot of code 
+that would only distract from the point we want to show. That said, we 
+welcome bugreports or bug fixes for these code samples.
+
+We refer to the README files in the code dirs for more information about usage
+and/or caveats of the code.
+
 Enjoy,
   Peter Saint-Andre (http://stpeter.im)
   Kevin Smith (http://kismith.co.uk)

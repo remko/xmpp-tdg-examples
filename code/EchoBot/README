@@ -1,0 +1,5 @@
+The Echo Bot code is described in Chapter 2 of the book.
+It is a bot that echoes back all the messages it is sent.
+
+To start this bot, simply edit EchoBot.py to reflect your server
+settings, and run the script.
