@@ -18,9 +18,9 @@ class RegistrableComponent :
     ## BEGIN NEW
     self.xmpp.registerPlugin("xep_0030")
     self.xmpp.plugin["xep_0030"].add_feature("jabber:iq:register")
-    self.xmpp.add_handler("<iq type='get' xmlns='jabber:client'>" + 
+    self.xmpp.add_handler("<iq type='get' xmlns='jabber:component:accept'>" + 
       "<query xmlns='jabber:iq:register'/></iq>", self.handleRegistrationFormRequest)
-    self.xmpp.add_handler("<iq type='set' xmlns='jabber:client'>" +
+    self.xmpp.add_handler("<iq type='set' xmlns='jabber:component:accept'>" +
       "<query xmlns='jabber:iq:register'/></iq>", self.handleRegistrationRequest)
     ## END NEW
 
@@ -33,10 +33,12 @@ class RegistrableComponent :
 
   def handleRegistrationRequest(self, request) :
     jid = request.attrib["from"]
-    user = request.find("{jabber:iq:register}query/{jabber:iq:register}username")
-    password = request.find("{jabber:iq:register}query/{jabber:iq:register}password")
+    user = request.find("{jabber:iq:register}query/{jabber:iq:register}username").text
+    password = request.find("{jabber:iq:register}query/{jabber:iq:register}password").text
     if self.backend.registerXMPPUser(user, password, jid) :
       self.sendRegistrationResponse(request, "result")
+      userJID = self.backend.getJIDForUser(user)
+      self.xmpp.sendPresenceSubscription(pto=userJID, ptype="subscribe")
     else :
       error = self.xmpp.makeStanzaError("forbidden", "auth")
       self.sendRegistrationResponse(request, "error", error)

@@ -97,8 +97,9 @@ class SimpleBackend (Backend) :
       self.contacts[user] = []
     self.contacts.setdefault(user, []).append(contact)
 
-  def registerXMPPUser(self, user, password, jid) :
-    self.jidToUser[jid] = user
-    self.userToJID[user] = jid
+  def registerXMPPUser(self, user, password, fulljid) :
+    barejid = fulljid.split('/', 1)[0]
+    self.jidToUser[barejid] = user
+    self.userToJID[user] = barejid
     return True
 
