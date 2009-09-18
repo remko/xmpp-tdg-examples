@@ -12,6 +12,10 @@ welcome bugreports or bug fixes for these code samples.
 We refer to the README files in the code dirs for more information about usage
 and/or caveats of the code.
 
+You can obtain the latest version of this package from the Git repository
+at http://el-tramo.be/git/xmpp-tdg (which is mirrored on 
+GitHub at http://github.com/remko/xmpp-tdg )
+
 Enjoy,
   Peter Saint-Andre (http://stpeter.im)
   Kevin Smith (http://kismith.co.uk)
