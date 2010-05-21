@@ -16,6 +16,15 @@ You can obtain the latest version of this package from the Git repository
 at http://el-tramo.be/git/xmpp-tdg (which is mirrored on 
 GitHub at http://github.com/remko/xmpp-tdg )
 
+Since SleekXMPP is constantly progressing, the examples may not work with
+more recent versions of the library. However, the SleekXMPP project is 
+maintaining a Wiki page with an updated set of examples, modified to work
+with the latest version of SleekXMPP. You can find the updated set of examples
+at:
+
+	http://wiki.github.com/fritzy/SleekXMPP/xmpp-the-definitive-guide
+
+
 Enjoy,
   Peter Saint-Andre (http://stpeter.im)
   Kevin Smith (http://kismith.co.uk)
