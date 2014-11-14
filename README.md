@@ -15,7 +15,7 @@ We refer to the `README` files in the code dirs for more information about usage
 and/or caveats of the code.
 
 You can obtain the latest version of this package from the 
-[Git repository](http://github.com/remko/xmpp-tdg-examples).
+[Git repository](https://github.com/remko/xmpp-tdg-examples).
 
 Since SleekXMPP is constantly progressing, the examples may not work with
 more recent versions of the library. However, the SleekXMPP project is 
@@ -28,6 +28,6 @@ Enjoy,
 
 - [Peter Saint-Andre](http://stpeter.im)
 - [Kevin Smith](http://kismith.co.uk)
-- [Remko Tronçon](http://el-tramo.be)
+- [Remko Tronçon](https://el-tramo.be)
 
 (the authors)
